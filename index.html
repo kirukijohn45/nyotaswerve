@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nyota Swerve | Luxury Bespoke Tailoring</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Poppins:wght@200;300;400;500&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+:root{--gold:#C8A96A;--black:#0D0D0D;--charcoal:#1E1E1E;}
+body{font-family:'Poppins',sans-serif;background:#0D0D0D;color:#fff;}
+h1,h2,h3{font-family:'Playfair Display',serif;}
+.gold-text{color:#C8A96A;}
+</style>
+</head>
+<body class="antialiased">
+<header class="fixed top-0 w-full z-50 bg-black/30 backdrop-blur-md border-b border-white/5">
+<div class="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
+<a href="#" class="text-2xl font-serif tracking-widest font-bold">NYOTA SWERVE</a>
+<nav class="hidden md:flex gap-8 text-xs uppercase tracking-[0.15em] text-white/70">
+<a href="#about" class="hover:text-[#C8A96A]">About</a>
+<a href="#services" class="hover:text-[#C8A96A]">Services</a>
+<a href="#gallery" class="hover:text-[#C8A96A]">Gallery</a>
+<a href="#contact" class="hover:text-[#C8A96A]">Contact</a>
+</nav>
+</div>
+</header>
+
+<section class="h-screen relative flex items-center justify-center overflow-hidden">
+<img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=2071&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-40" alt="Luxury suit">
+<div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black"></div>
+<div class="relative z-10 text-center px-6 max-w-5xl">
+<h1 class="text-6xl md:text-8xl font-serif leading-[0.9] tracking-tight mb-6">Crafted for Gentlemen<br>Who Demand <span class="italic text-[#C8A96A]">Perfection</span></h1>
+<p class="text-lg md:text-xl text-white/70 font-light tracking-wide mb-10">Custom Bespoke Suits Designed Around You.</p>
+<div class="flex justify-center gap-6">
+<a href="#contact" class="px-8 py-4 bg-[#C8A96A] text-black font-medium tracking-widest uppercase hover:bg-white transition">Book Consultation</a>
+<a href="#gallery" class="px-8 py-4 border border-white/20 text-white uppercase tracking-widest hover:border-[#C8A96A] hover:text-[#C8A96A] transition">View Collection</a>
+</div>
+</div>
+</section>
+
+<section id="about" class="py-32 px-8 max-w-6xl mx-auto">
+<div class="grid md:grid-cols-2 gap-20 items-center">
+<div>
+<img src="https://images.unsplash.com/photo-1552374192-8cf395677789?q=80&w=2070&auto=format&fit=crop" class="rounded-sm shadow-2xl grayscale hover:scale-[1.01] transition duration-700" alt="Tailor">
+</div>
+<div>
+<h2 class="text-5xl md:text-6xl font-serif mb-8 leading-tight">The Art of <span class="italic text-[#C8A96A]">Bespoke</span></h2>
+<p class="text-white/70 leading-loose mb-6">Nyota Swerve is a luxury Kenyan tailoring house dedicated to the modern gentleman. With a commitment to craftsmanship and an eye for detail, we create garments that speak of confidence, elegance, and individual expression.</p>
+<p class="text-white/70 leading-loose">Every stitch tells a story. Every suit is a journey.</p>
+</div>
+</div>
+</section>
+
+<section id="services" class="py-32 bg-[#1E1E1E]">
+<div class="max-w-7xl mx-auto px-8">
+<h2 class="text-5xl md:text-6xl font-serif mb-20 text-center">Our <span class="italic text-[#C8A96A]">Services</span></h2>
+<div class="grid md:grid-cols-3 gap-10">
+<div class="group relative overflow-hidden rounded-sm shadow-lg">
+<img src="https://images.unsplash.com/photo-1505022610485-db00e8e7ddf1?q=80&w=2070&auto=format&fit=crop" class="w-full h-96 object-cover group-hover:scale-105 transition duration-700" alt="Suit">
+<div class="absolute bottom-0 w-full p-8 bg-gradient-to-t from-black/90 to-transparent">
+<h3 class="text-2xl font-serif mb-2">Bespoke Suits</h3>
+<p class="text-white/60 text-sm">Perfectly tailored for every occasion.</p>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-sm shadow-lg">
+<img src="https://images.unsplash.com/photo-1593030761757-527ccb8b9d68?q=80&w=2070&auto=format&fit=crop" class="w-full h-96 object-cover group-hover:scale-105 transition duration-700" alt="Accessories">
+<div class="absolute bottom-0 w-full p-8 bg-gradient-to-t from-black/90 to-transparent">
+<h3 class="text-2xl font-serif mb-2">Accessories</h3>
+<p class="text-white/60 text-sm">Luxury ties, cufflinks, and leather goods.</p>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-sm shadow-lg">
+<img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=2070&auto=format&fit=crop" class="w-full h-96 object-cover group-hover:scale-105 transition duration-700" alt="Alteration">
+<div class="absolute bottom-0 w-full p-8 bg-gradient-to-t from-black/90 to-transparent">
+<h3 class="text-2xl font-serif mb-2">Alterations</h3>
+<p class="text-white/60 text-sm">Precision adjustments for the perfect fit.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="gallery" class="py-32 px-8 max-w-7xl mx-auto">
+<h2 class="text-5xl md:text-6xl font-serif mb-16 text-center">The <span class="italic text-[#C8A96A]">Collection</span></h2>
+<div class="columns-1 md:columns-3 gap-6 space-y-6">
+<img src="https://images.unsplash.com/photo-1617127365650-c47fa864d8d8?q=80&w=2070&auto=format&fit=crop" class="break-inside-avoid rounded-sm shadow-xl hover:scale-[1.02] transition duration-500" alt="Gallery 1">
+<img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=2070&auto=format&fit=crop" class="break-inside-avoid rounded-sm shadow-xl hover:scale-[1.02] transition duration-500" alt="Gallery 2">
+<img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=2070&auto=format&fit=crop" class="break-inside-avoid rounded-sm shadow-xl hover:scale-[1.02] transition duration-500" alt="Gallery 3">
+<img src="https://images.unsplash.com/photo-1504194921103-f8b80cadd5e4?q=80&w=2070&auto=format&fit=crop" class="break-inside-avoid rounded-sm shadow-xl hover:scale-[1.02] transition duration-500" alt="Gallery 4">
+</div>
+</section>
+
+<section id="contact" class="py-32 bg-[#1E1E1E]">
+<div class="max-w-5xl mx-auto px-8 text-center">
+<h2 class="text-5xl md:text-6xl font-serif mb-6">Begin Your <span class="italic text-[#C8A96A]">Journey</span></h2>
+<p class="text-white/70 mb-12">Book a private consultation and experience luxury tailoring.</p>
+<form onsubmit="event.preventDefault(); this.innerHTML='<h3 class=\'text-3xl font-serif text-[#C8A96A]\'>Request Received</h3><p class=\'text-white/60 mt-4\'>We will contact you shortly.</p>';" class="space-y-6 max-w-xl mx-auto">
+<input type="text" placeholder="Name" class="w-full p-4 bg-[#0D0D0D] border border-white/10 rounded-sm focus:outline-none focus:border-[#C8A96A] text-white" required>
+<input type="email" placeholder="Email" class="w-full p-4 bg-[#0D0D0D] border border-white/10 rounded-sm focus:outline-none focus:border-[#C8A96A] text-white" required>
+<button type="submit" class="w-full py-4 bg-[#C8A96A] text-black font-medium tracking-widest uppercase hover:bg-white transition">Book Consultation</button>
+</form>
+</div>
+</section>
+
+<footer class="py-12 px-8 border-t border-white/5 text-center text-sm text-white/30">
+<p>© Nyota Swerve. Crafted with Perfection.</p>
+</footer>
+</body>
+</html>
+<section id="wedding" class="py-32 px-8 max-w-6xl mx-auto">
+<h2 class="text-5xl md:text-6xl font-serif mb-16 text-center">Wedding <span class="italic text-[#C8A96A]">Packages</span></h2>
+<div class="grid md:grid-cols-3 gap-10 text-center">
+<div class="p-8 border border-white/10 rounded-sm">
+<h3 class="text-2xl font-serif mb-4">Groom</h3>
+<p class="text-white/50 text-sm">Full bespoke suit, shirt, accessories.</p>
+</div>
+<div class="p-8 border border-[#C8A96A]/40 rounded-sm shadow-xl shadow-[#C8A96A]/10">
+<h3 class="text-2xl font-serif mb-4 text-[#C8A96A]">Groomsmen</h3>
+<p class="text-white/50 text-sm">Matching luxury suits for your party.</p>
+</div>
+<div class="p-8 border border-white/10 rounded-sm">
+<h3 class="text-2xl font-serif mb-4">Family</h3>
+<p class="text-white/50 text-sm">Tailored elegance for the whole family.</p>
+</div>
+</div>
+</section>
