@@ -63,11 +63,19 @@ const process = [
 const gallery = [
   { src: '/images/nyota-wedding.jpg', title: 'The wedding party', category: 'Wedding', tall: true },
   { src: '/images/nyota-craft.jpg', title: 'Made by hand', category: 'Process' },
-  { src: '/images/nyota-hero.jpg', title: 'Midnight charcoal', category: 'Business' },
+  { src: '/images/nyota-hero.jpg', title: 'Midnight charcoal', category: 'Business', wide: true },
   { src: '/images/client-tuxedo.jpg', title: 'Black tie, redefined', category: 'Tuxedo', tall: true },
   { src: '/images/fitting.jpg', title: 'A precise shoulder', category: 'Process' },
   { src: '/images/tuxedo-detail.jpg', title: 'The final adjustment', category: 'Tuxedo' },
+  { src: '/images/gallery-client.jpg', title: 'Quiet confidence', category: 'Clients', tall: true },
+  { src: '/images/gallery-accessories.jpg', title: 'The finishing notes', category: 'Accessories', tall: true },
+  { src: '/images/gallery-before-after.jpg', title: 'The power of proportion', category: 'Transformations', wide: true },
+  { src: '/images/gallery-fabric.jpg', title: 'Cloth with character', category: 'Process', tall: true },
+  { src: '/images/gallery-groom.jpg', title: 'The ivory dinner jacket', category: 'Wedding', tall: true },
+  { src: '/images/business-suit.jpg', title: 'The executive wardrobe', category: 'Business' },
 ];
+
+const homepageGallery = [gallery[10], gallery[6], gallery[1], gallery[8]];
 
 const journal = [
   {
@@ -111,9 +119,9 @@ const testimonials = [
   },
 ];
 
-function Brand({ compact = false }) {
+function Brand({ compact = false, homeHref = '#top' }) {
   return (
-    <a className={`brand ${compact ? 'brand--compact' : ''}`} href="#top" aria-label="Nyota Swerve home">
+    <a className={`brand ${compact ? 'brand--compact' : ''}`} href={homeHref} aria-label="Nyota Swerve home">
       <svg className="brand__mark" viewBox="0 0 44 44" aria-hidden="true">
         <path d="M22 2.8l2.8 14.4L39 20.4l-14.2 3.2L22 41.2l-2.8-17.6L5 20.4l14.2-3.2L22 2.8Z" />
         <circle cx="22" cy="20.5" r="2.4" />
@@ -123,7 +131,7 @@ function Brand({ compact = false }) {
   );
 }
 
-function Header({ onBook }) {
+function Header({ onBook, innerPage = false }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -149,13 +157,13 @@ function Header({ onBook }) {
         <a href={whatsappHref} target="_blank" rel="noreferrer">WhatsApp us <ArrowUpRight size={13} /></a>
       </div>
       <header className={`site-header ${scrolled ? 'site-header--scrolled' : ''}`}>
-        <Brand />
+        <Brand homeHref={innerPage ? '/' : '#top'} />
         <nav className="desktop-nav" aria-label="Primary navigation">
-          <a href="#story">Our story</a>
-          <a href="#services">Services</a>
-          <a href="#weddings">Weddings</a>
-          <a href="#gallery">Gallery</a>
-          <a href="#journal">Journal</a>
+          <a href={innerPage ? '/#story' : '#story'}>Our story</a>
+          <a href={innerPage ? '/#services' : '#services'}>Services</a>
+          <a href={innerPage ? '/#weddings' : '#weddings'}>Weddings</a>
+          <a href="/gallery">Gallery</a>
+          <a href={innerPage ? '/#journal' : '#journal'}>Journal</a>
         </nav>
         <div className="header-actions">
           <button className="text-button desktop-book" onClick={onBook}>Book a fitting <ArrowUpRight size={15} /></button>
@@ -167,8 +175,12 @@ function Header({ onBook }) {
       <div className={`mobile-menu ${open ? 'is-open' : ''}`} aria-hidden={!open}>
         <nav aria-label="Mobile navigation">
           {[
-            ['Our story', '#story'], ['Services', '#services'], ['Weddings', '#weddings'],
-            ['Gallery', '#gallery'], ['Journal', '#journal'], ['Contact', '#contact'],
+            ['Our story', innerPage ? '/#story' : '#story'],
+            ['Services', innerPage ? '/#services' : '#services'],
+            ['Weddings', innerPage ? '/#weddings' : '#weddings'],
+            ['Gallery', '/gallery'],
+            ['Journal', innerPage ? '/#journal' : '#journal'],
+            ['Contact', innerPage ? '/#contact' : '#contact'],
           ].map(([label, href], i) => (
             <a key={href} href={href} onClick={close}><span>0{i + 1}</span>{label}<ArrowUpRight /></a>
           ))}
@@ -314,11 +326,12 @@ function Process() {
   );
 }
 
-function Gallery() {
+function Gallery({ full = false }) {
   const [filter, setFilter] = useState('All');
   const [active, setActive] = useState(null);
-  const categories = ['All', 'Wedding', 'Business', 'Tuxedo', 'Process'];
-  const shown = filter === 'All' ? gallery : gallery.filter(item => item.category === filter);
+  const categories = ['All', 'Wedding', 'Business', 'Tuxedo', 'Clients', 'Process', 'Accessories', 'Transformations'];
+  const collection = full ? gallery : homepageGallery;
+  const shown = filter === 'All' ? collection : collection.filter(item => item.category === filter);
 
   useEffect(() => {
     const close = e => e.key === 'Escape' && setActive(null);
@@ -327,20 +340,30 @@ function Gallery() {
   }, []);
 
   return (
-    <section className="gallery section" id="gallery">
+    <section className={`gallery section ${full ? 'gallery--full' : 'gallery--preview'}`} id={full ? 'portfolio' : 'gallery'}>
       <div className="shell">
         <div className="gallery__head reveal">
-          <div><div className="eyebrow"><span /> Selected work</div><p>04 / 06</p></div>
-          <h2>Worn well.<br /><em>Remembered longer.</em></h2>
-          <div className="filters" role="group" aria-label="Filter gallery">
-            {categories.map(category => (
-              <button className={filter === category ? 'active' : ''} onClick={() => setFilter(category)} key={category}>{category}</button>
-            ))}
-          </div>
+          <div><div className="eyebrow"><span /> {full ? 'The full collection' : 'Gallery'}</div><p>{full ? `${gallery.length} stories` : '04 / 06'}</p></div>
+          <h2>{full ? <>Explore the work.<br /><em>Find your direction.</em></> : <>A glimpse of<br /><em>the Nyota life.</em></>}</h2>
+          {full ? (
+            <p className="gallery__intro">Wedding tailoring, sharp business wear, black tie and the craft behind every finished piece.</p>
+          ) : (
+            <p className="gallery__intro">Weddings, fittings, transformations and clients wearing their finished pieces with confidence.</p>
+          )}
         </div>
-        <div className={`gallery-grid ${shown.length < 3 ? 'gallery-grid--small' : ''}`}>
+        {full && (
+          <div className="gallery-toolbar reveal">
+            <div className="filters" role="group" aria-label="Filter gallery">
+              {categories.map(category => (
+                <button className={filter === category ? 'active' : ''} onClick={() => setFilter(category)} key={category}>{category}</button>
+              ))}
+            </div>
+            <span>{String(shown.length).padStart(2, '0')} images</span>
+          </div>
+        )}
+        <div className={`gallery-grid ${shown.length < 3 ? 'gallery-grid--small' : ''} ${full ? 'gallery-grid--full' : 'gallery-grid--preview'}`}>
           {shown.map((item, index) => (
-            <button className={`gallery-item ${item.tall ? 'gallery-item--tall' : ''}`} key={item.src} onClick={() => setActive(item)} aria-label={`View ${item.title}`}>
+            <button className={`gallery-item ${full && item.tall ? 'gallery-item--tall' : ''} ${full && item.wide ? 'gallery-item--wide' : ''}`} key={item.src} onClick={() => setActive(item)} aria-label={`View ${item.title}`}>
               <img src={item.src} alt={item.title} loading="lazy" />
               <span className="gallery-item__number">{String(index + 1).padStart(2, '0')}</span>
               <span className="gallery-item__caption"><small>{item.category}</small><strong>{item.title}</strong></span>
@@ -348,6 +371,12 @@ function Gallery() {
             </button>
           ))}
         </div>
+        {!full && (
+          <div className="gallery__more reveal">
+            <p>There is more to see.</p>
+            <a className="button button--gold" href="/gallery">View the full gallery <ArrowUpRight size={17} /></a>
+          </div>
+        )}
       </div>
       {active && (
         <div className="lightbox" role="dialog" aria-modal="true" aria-label={active.title} onClick={() => setActive(null)}>
@@ -356,6 +385,40 @@ function Gallery() {
           <div><small>{active.category}</small><strong>{active.title}</strong></div>
         </div>
       )}
+    </section>
+  );
+}
+
+function GalleryPageHero({ onBook }) {
+  return (
+    <main className="gallery-page-hero" id="top">
+      <div className="gallery-page-hero__image" />
+      <div className="gallery-page-hero__shade" />
+      <div className="shell gallery-page-hero__content">
+        <div className="eyebrow hero__eyebrow"><span /> The Nyota portfolio</div>
+        <h1>Our<br /><em>gallery.</em></h1>
+        <p>Real inspiration for defining moments—tailoring, ceremony and the exacting work that connects the two.</p>
+        <div className="gallery-page-hero__actions">
+          <a className="button button--gold" href="#portfolio">Explore the collection <ArrowDown size={17} /></a>
+          <button className="button button--ghost" onClick={onBook}>Book your fitting</button>
+        </div>
+      </div>
+      <div className="gallery-page-hero__count"><b>{String(gallery.length).padStart(2, '0')}</b><span>Selected<br />stories</span></div>
+    </main>
+  );
+}
+
+function GalleryCta({ onBook }) {
+  return (
+    <section className="gallery-cta">
+      <div className="gallery-cta__image" />
+      <div className="gallery-cta__shade" />
+      <div className="shell gallery-cta__content reveal">
+        <div className="eyebrow eyebrow--light"><span /> Your turn</div>
+        <h2>Inspired?<br /><em>Make it yours.</em></h2>
+        <p>Bring us a reference or begin with a blank page. Either way, the finished piece will be unmistakably yours.</p>
+        <button className="button button--gold" onClick={onBook}>Begin a consultation <ArrowUpRight size={17} /></button>
+      </div>
     </section>
   );
 }
@@ -498,13 +561,14 @@ function Contact() {
   );
 }
 
-function Footer({ onBook }) {
+function Footer({ onBook, innerPage = false }) {
+  const home = anchor => innerPage ? `/${anchor}` : anchor;
   return (
     <footer>
       <div className="shell footer__top">
-        <div className="footer__intro"><Brand /><p>Kenyan bespoke tailoring for a life lived with intention.</p><button onClick={onBook}>Book a consultation <ArrowUpRight /></button></div>
-        <div className="footer__links"><h4>Explore</h4><a href="#story">Our story</a><a href="#services">Services</a><a href="#weddings">Wedding atelier</a><a href="#gallery">Selected work</a><a href="#journal">Style journal</a></div>
-        <div className="footer__links"><h4>Services</h4><a href="#services">Bespoke suits</a><a href="#weddings">Groom packages</a><a href="#services">Corporate wear</a><a href="#services">Alterations</a><a href="#services">Accessories</a></div>
+        <div className="footer__intro"><Brand homeHref={innerPage ? '/' : '#top'} /><p>Kenyan bespoke tailoring for a life lived with intention.</p><button onClick={onBook}>Book a consultation <ArrowUpRight /></button></div>
+        <div className="footer__links"><h4>Explore</h4><a href={home('#story')}>Our story</a><a href={home('#services')}>Services</a><a href={home('#weddings')}>Wedding atelier</a><a href="/gallery">Gallery</a><a href={home('#journal')}>Style journal</a></div>
+        <div className="footer__links"><h4>Services</h4><a href={home('#services')}>Bespoke suits</a><a href={home('#weddings')}>Groom packages</a><a href={home('#services')}>Corporate wear</a><a href={home('#services')}>Alterations</a><a href={home('#services')}>Accessories</a></div>
         <div className="footer__social"><h4>Follow the work</h4><a href="https://www.instagram.com/nyota.swerve.closet/" target="_blank" rel="noreferrer"><Instagram />Instagram<ArrowUpRight /></a><a href="https://www.facebook.com/people/Nyotaswervecloset/100083360170098/" target="_blank" rel="noreferrer"><Facebook />Facebook<ArrowUpRight /></a><a href="https://www.tiktok.com/search?q=nyota%20swerve%20closet" target="_blank" rel="noreferrer"><Play />TikTok<ArrowUpRight /></a></div>
       </div>
       <div className="shell footer__bottom"><span>© {new Date().getFullYear()} Nyota Swerve Closet.</span><span>Made in Kenya <Star size={11} fill="currentColor" /></span><div><a href="#top">Privacy</a><a href="#top">Terms</a></div></div>
@@ -568,21 +632,46 @@ function RevealObserver() {
 
 function App() {
   const [bookingOpen, setBookingOpen] = useState(false);
+  const isGalleryPage = window.location.pathname.replace(/\/+$/, '') === '/gallery';
+  const openBooking = () => setBookingOpen(true);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = isGalleryPage
+      ? 'Gallery | Nyota Swerve Bespoke Tailoring'
+      : 'Nyota Swerve | Bespoke Tailoring, Kenya';
+  }, [isGalleryPage]);
+
+  if (isGalleryPage) {
+    return (
+      <>
+        <RevealObserver />
+        <Header onBook={openBooking} innerPage />
+        <GalleryPageHero onBook={openBooking} />
+        <Gallery full />
+        <GalleryCta onBook={openBooking} />
+        <Footer onBook={openBooking} innerPage />
+        <BookingModal open={bookingOpen} onClose={() => setBookingOpen(false)} />
+        <WhatsAppButton />
+      </>
+    );
+  }
+
   return (
     <>
       <RevealObserver />
-      <Header onBook={() => setBookingOpen(true)} />
-      <Hero onBook={() => setBookingOpen(true)} />
+      <Header onBook={openBooking} />
+      <Hero onBook={openBooking} />
       <Story />
       <Services />
-      <Wedding onBook={() => setBookingOpen(true)} />
+      <Wedding onBook={openBooking} />
       <Process />
       <Gallery />
       <Testimonials />
       <Booking />
       <Journal />
       <Contact />
-      <Footer onBook={() => setBookingOpen(true)} />
+      <Footer onBook={openBooking} />
       <BookingModal open={bookingOpen} onClose={() => setBookingOpen(false)} />
       <WhatsAppButton />
     </>
