@@ -48,14 +48,14 @@ const services = [
     number: '01',
     title: 'Bespoke tailoring',
     copy: 'One pattern, cut only for you. From business suits to statement tuxedos, every detail follows your frame and your story.',
-    image: mapsImages[0],
+    image: mapsImages[9],
     items: ['Two & three-piece suits', 'Tuxedos & dinner jackets', 'Blazers, trousers & shirts'],
   },
   {
     number: '02',
     title: 'Wedding atelier',
     copy: 'A composed wedding wardrobe for the groom and his circle, designed to feel connected without ever looking uniform.',
-    image: mapsImages[2],
+    image: mapsImages[4],
     items: ['Groom consultation', 'Groomsmen packages', 'Finishing accessories'],
   },
   {
@@ -88,7 +88,7 @@ const gallery = [
   { src: mapsImages[9], title: 'Colour, cut, character', category: 'Bespoke', source: 'Nyota Swerve', tall: true },
 ];
 
-const homepageGallery = [gallery[0], gallery[2], gallery[3], gallery[8]];
+const homepageGallery = [gallery[1], gallery[5], gallery[6], gallery[7]];
 
 const journal = [
   {
@@ -96,21 +96,18 @@ const journal = [
     date: '6 min read',
     title: 'How should a suit really fit?',
     copy: 'The quiet details—from shoulder line to trouser break—that separate a good suit from a great one.',
-    image: mapsImages[0],
   },
   {
     category: 'Wedding notes',
     date: '4 min read',
     title: 'A groom’s guide to black tie',
     copy: 'Peak or shawl lapel? Bow tie or necktie? Start with the codes, then make the look your own.',
-    image: mapsImages[2],
   },
   {
     category: 'Cloth stories',
     date: '5 min read',
     title: 'Choosing fabric for Kenya’s climate',
     copy: 'A practical look at weight, weave and breathability for an elegant suit that stays comfortable.',
-    image: mapsImages[6],
   },
 ];
 
@@ -214,7 +211,6 @@ function Hero({ onBook }) {
         <div className="hero__image" style={{ '--hero-image': `url("${mapsImages[0]}")` }} role="img" aria-label="A Nyota Swerve client in a bespoke pinstripe suit" />
         <div className="hero__shade" />
         <div className="hero__content shell">
-          <div className="eyebrow hero__eyebrow"><span /> Bespoke tailoring · Kenya</div>
           <h1>Impeccably<br />tailored.<br /><em>Unmistakably yours.</em></h1>
           <p>Precision-made suits for men who understand that presence begins before a word is spoken.</p>
           <div className="hero__actions">
@@ -379,7 +375,7 @@ function Gallery({ full = false }) {
         )}
         <div className={`gallery-grid ${shown.length < 3 ? 'gallery-grid--small' : ''} ${full ? 'gallery-grid--full' : 'gallery-grid--preview'}`}>
           {shown.map((item, index) => (
-            <button className={`gallery-item ${full && item.tall ? 'gallery-item--tall' : ''} ${full && item.wide ? 'gallery-item--wide' : ''}`} key={item.src} onClick={() => setActive(item)} aria-label={`View ${item.title}`}>
+            <button className={`gallery-item ${full && item.tall ? 'gallery-item--tall' : ''} ${full && item.wide ? 'gallery-item--wide' : ''} ${active?.src === item.src ? 'gallery-item--active' : ''}`} key={item.src} onClick={() => setActive(item)} aria-label={`View ${item.title}`}>
               <img src={item.src} alt={item.title} loading="lazy" referrerPolicy="no-referrer" onError={item.fallback ? e => { e.currentTarget.onerror = null; e.currentTarget.src = item.fallback; } : undefined} />
               <span className="gallery-item__number">{String(index + 1).padStart(2, '0')}</span>
               <span className="gallery-item__caption"><small>{item.source ? `${item.category} · ${item.source}` : item.category}</small><strong>{item.title}</strong></span>
@@ -408,7 +404,7 @@ function Gallery({ full = false }) {
 function GalleryPageHero({ onBook }) {
   return (
     <main className="gallery-page-hero" id="top">
-      <div className="gallery-page-hero__image" style={{ '--gallery-hero-image': `url("${mapsImages[2]}")` }} />
+      <div className="gallery-page-hero__image" aria-hidden="true" />
       <div className="gallery-page-hero__shade" />
       <div className="shell gallery-page-hero__content">
         <div className="eyebrow hero__eyebrow"><span /> The Nyota portfolio</div>
@@ -427,7 +423,7 @@ function GalleryPageHero({ onBook }) {
 function GalleryCta({ onBook }) {
   return (
     <section className="gallery-cta">
-      <div className="gallery-cta__image" style={{ '--gallery-cta-image': `url("${mapsImages[8]}")` }} />
+      <div className="gallery-cta__image" aria-hidden="true" />
       <div className="gallery-cta__shade" />
       <div className="shell gallery-cta__content reveal">
         <div className="eyebrow eyebrow--light"><span /> Your turn</div>
@@ -539,9 +535,9 @@ function Journal() {
           <p>Notes on fit, cloth, occasion and the details that make personal style feel effortless.</p>
         </div>
         <div className="journal-grid">
-          {journal.map(article => (
-            <article className="journal-card reveal" key={article.title}>
-              <a className="journal-card__image" href="#journal"><img src={article.image} alt="" loading="lazy" referrerPolicy="no-referrer" /><span><ArrowUpRight /></span></a>
+          {journal.map((article, index) => (
+            <article className="journal-card journal-card--text reveal" key={article.title}>
+              <div className="journal-card__number">{String(index + 1).padStart(2, '0')}</div>
               <div className="journal-card__meta"><span>{article.category}</span><i />{article.date}</div>
               <h3><a href="#journal">{article.title}</a></h3>
               <p>{article.copy}</p>
