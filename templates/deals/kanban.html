@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Kanban Board - Nyotaswerve CRM{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<style>
+    .kanban-board { display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; min-height: 70vh; }
+    .kanban-column { min-width: 300px; max-width: 350px; flex-shrink: 0; }
+    .kanban-cards { min-height: 60vh; }
+    .kanban-card { transition: transform 0.15s, box-shadow 0.15s; }
+    .kanban-card:hover { transform: translateY(-2px); }
+    .kanban-card.dragging { opacity: 0.5; }
+    .sortable-ghost { opacity: 0.4; }
+    .sortable-chosen { box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-800">Deal Pipeline</h1>
+            <p class="text-gray-500">Drag and drop deals to update their stage</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <!-- Pipeline selector -->
+            <form method="get" action="{% url 'deals:kanban' %}" class="flex items-center gap-2">
+                <select name="pipeline" onchange="this.form.submit()" class="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white">
+                    {% for p in pipelines %}
+                    <option value="{{ p.id }}" {% if p.id == active_pipeline.id %}selected{% endif %}>{{ p.name }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+            <a href="#" class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors">
+                <i class="fas fa-plus mr-1"></i>New Deal
+            </a>
+        </div>
+    </div>
+</div>
+
+{% if active_pipeline %}
+<div class="kanban-board" id="kanbanBoard">
+    {% for stage in stages %}
+    <div class="kanban-column" data-stage-id="{{ stage.id }}">
+        <!-- Column Header -->
+        <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full" style="background-color: {{ stage.color }};"></div>
+                <h3 class="font-semibold text-gray-700">{{ stage.name }}</h3>
+                <span class="text-xs text-gray-500 bg-gray-200 px-2 py-0.5 rounded-full">{{ deals_by_stage|dictsort:stage.id|length }}</span>
+            </div>
+            <button class="text-gray-400 hover:text-gray-600">
+                <i class="fas fa-plus text-sm"></i>
+            </button>
+        </div>
+        
+        <!-- Cards Container (Sortable) -->
+        <div class="kanban-cards" data-stage-id="{{ stage.id }}">
+            {% for deal in deals_by_stage|default:stage.id %}
+            {% with stage_deals=deals_by_stage|dictsort:stage.id %}
+            <!-- This needs a different approach - let's iterate properly -->
+            {% endwith %}
+            {% endfor %}
+            
+            {% for deal in deals_by_stage.items %}
+                {% if deal.0 == stage.id %}
+                    {% for d in deal.1 %}
+                    <div class="kanban-card" data-deal-id="{{ d.id }}" data-order="{{ d.order }}">
+                        <div class="flex items-start justify-between mb-2">
+                            <h4 class="font-medium text-gray-800 text-sm">{{ d.title }}</h4>
+                            {% if d.priority == 'urgent' %}
+                            <span class="text-red-500"><i class="fas fa-flag"></i></span>
+                            {% elif d.priority == 'high' %}
+                            <span class="text-orange-500"><i class="fas fa-flag"></i></span>
+                            {% endif %}
+                        </div>
+                        
+                        {% if d.contact or d.company %}
+                        <p class="text-xs text-gray-500 mb-2">
+                            {% if d.contact %}{{ d.contact.full_name }}{% endif %}
+                            {% if d.company %}{% if d.contact %} — {% endif %}{{ d.company.name }}{% endif %}
+                        </p>
+                        {% endif %}
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                {% if d.amount %}
+                                <span class="font-semibold text-sm text-gray-800">KES {{ d.amount|floatformat:0|intcomma }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="flex items-center gap-2">
+                                {% if d.assigned_to %}
+                                <div class="w-6 h-6 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center text-xs font-medium" title="{{ d.assigned_to.get_full_name|default:d.assigned_to.username }}">
+                                    {{ d.assigned_to.first_name|first|upper }}{{ d.assigned_to.last_name|first|upper }}
+                                </div>
+                                {% endif %}
+                                {% if d.expected_close_date %}
+                                <span class="text-xs text-gray-400">
+                                    <i class="far fa-calendar-alt mr-1"></i>{{ d.expected_close_date|date:"d/m" }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        {% if d.probability > 0 %}
+                        <div class="mt-2 w-full bg-gray-200 rounded-full h-1.5">
+                            <div class="h-1.5 rounded-full" style="width: {{ d.probability }}%; background-color: {{ stage.color }};"></div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% empty %}
+                    <div class="text-center py-8 text-gray-400 text-sm">
+                        <i class="fas fa-inbox text-2xl mb-2 block"></i>
+                        No deals
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-20">
+    <i class="fas fa-tasks text-6xl text-gray-300 mb-4"></i>
+    <h2 class="text-xl font-semibold text-gray-600 mb-2">No Pipeline Configured</h2>
+    <p class="text-gray-400">Create a pipeline in the admin panel to get started.</p>
+    <a href="{% url 'admin:index' %}" class="mt-4 inline-block px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+        Go to Admin
+    </a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    {% if active_pipeline %}
+    // Initialize Sortable on each column
+    const columns = document.querySelectorAll('.kanban-cards');
+    columns.forEach(column => {
+        new Sortable(column, {
+            group: 'kanban',
+            animation: 200,
+            ghostClass: 'sortable-ghost',
+            chosenClass: 'sortable-chosen',
+            dragClass: 'dragging',
+            onEnd: function(evt) {
+                const dealId = evt.item.dataset.dealId;
+                const newStageId = evt.to.dataset.stageId;
+                const order = Array.from(evt.to.children).indexOf(evt.item);
+                
+                // Update via API
+                fetch(`/deals/${dealId}/update-stage/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({
+                        stage_id: parseInt(newStageId),
+                        order: order
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success) {
+                        console.error('Failed to update deal stage');
+                        location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    location.reload();
+                });
+            }
+        });
+    });
+    {% endif %}
+});
+</script>
+{% endblock %}

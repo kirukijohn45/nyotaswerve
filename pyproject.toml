@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "nyotaswerve-crm"
+version = "1.0.0"
+description = "Bitrix24-like CRM with Tally Prime integration"
+requires-python = ">=3.10"
+dependencies = [
+    "django>=5.2",
+    "djangorestframework>=3.18",
+    "django-cors-headers>=4.9",
+    "django-filter>=26.1",
+    "djangorestframework-simplejwt>=5.5",
+    "django-import-export>=4.4",
+    "whitenoise>=6.12",
+    "Pillow>=12.3",
+]
+
+[project.scripts]
+nyotaswerve = "crm_launcher:main"
+
+[tool.shiv]
+entry-point = "crm_launcher:main"
+output = "nyotaswerve-crm.pyz"
+python-version = "3.11"
+exclude = ["*.tests", "*.test*", "tests"]
+
+[project.urls]
+Homepage = "https://github.com/kirukijohn45/nyotaswerve"

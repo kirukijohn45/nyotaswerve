@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Tasks - Nyotaswerve CRM{% endblock %}
+
+{% block content %}
+<div class="mb-6 flex items-center justify-between">
+    <div>
+        <h1 class="text-2xl font-bold text-gray-800">Tasks</h1>
+        <p class="text-gray-500">Manage activities and follow-ups</p>
+    </div>
+    <a href="#" class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700">
+        <i class="fas fa-plus mr-1"></i>Add Task
+    </a>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 text-center">
+        <p class="text-2xl font-bold text-gray-800">{{ tasks|length }}</p>
+        <p class="text-sm text-gray-500">Total Tasks</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 text-center">
+        <p class="text-2xl font-bold text-yellow-600">{{ tasks|dictsortreversed:"due_date"|length }}</p>
+        <p class="text-sm text-gray-500">Pending</p>
+    </div>
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 text-center">
+        <p class="text-2xl font-bold text-green-600">{{ tasks|length }}</p>
+        <p class="text-sm text-gray-500">Completed</p>
+    </div>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="bg-gray-50 text-left text-gray-500">
+                    <th class="px-6 py-3 font-medium">Title</th>
+                    <th class="px-6 py-3 font-medium">Type</th>
+                    <th class="px-6 py-3 font-medium">Status</th>
+                    <th class="px-6 py-3 font-medium">Priority</th>
+                    <th class="px-6 py-3 font-medium">Assigned To</th>
+                    <th class="px-6 py-3 font-medium">Due Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr class="border-t border-gray-100 hover:bg-gray-50">
+                    <td class="px-6 py-3">
+                        <a href="{% url 'tasks:detail' task.id %}" class="font-medium text-indigo-600 hover:underline">
+                            {{ task.title }}
+                        </a>
+                    </td>
+                    <td class="px-6 py-3">{{ task.get_task_type_display }}</td>
+                    <td class="px-6 py-3">
+                        <span class="px-2 py-1 text-xs rounded-full 
+                            {% if task.status == 'completed' %}bg-green-100 text-green-700
+                            {% elif task.status == 'in_progress' %}bg-blue-100 text-blue-700
+                            {% elif task.status == 'cancelled' %}bg-red-100 text-red-700
+                            {% else %}bg-gray-100 text-gray-700{% endif %}">
+                            {{ task.get_status_display }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-3">
+                        <span class="{% if task.priority == 'urgent' %}text-red-600{% elif task.priority == 'high' %}text-orange-600{% elif task.priority == 'medium' %}text-yellow-600{% else %}text-gray-500{% endif %}">
+                            {{ task.get_priority_display }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-3 text-gray-500">{{ task.assigned_to.get_full_name|default:task.assigned_to.username|default:'—' }}</td>
+                    <td class="px-6 py-3 text-gray-500">{{ task.due_date|date:"d M Y H:i"|default:'—' }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                        <i class="fas fa-check-circle text-4xl text-gray-300 mb-3 block"></i>
+                        No tasks yet.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

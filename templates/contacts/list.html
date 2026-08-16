@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Contacts - Nyotaswerve CRM{% endblock %}
+
+{% block content %}
+<div class="mb-6 flex items-center justify-between">
+    <div>
+        <h1 class="text-2xl font-bold text-gray-800">Contacts</h1>
+        <p class="text-gray-500">Manage your contacts and companies</p>
+    </div>
+    <a href="#" class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700">
+        <i class="fas fa-plus mr-1"></i>Add Contact
+    </a>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="bg-gray-50 text-left text-gray-500">
+                    <th class="px-6 py-3 font-medium">Name</th>
+                    <th class="px-6 py-3 font-medium">Email</th>
+                    <th class="px-6 py-3 font-medium">Phone</th>
+                    <th class="px-6 py-3 font-medium">Company</th>
+                    <th class="px-6 py-3 font-medium">Type</th>
+                    <th class="px-6 py-3 font-medium">Assigned To</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in contacts %}
+                <tr class="border-t border-gray-100 hover:bg-gray-50">
+                    <td class="px-6 py-3">
+                        <a href="{% url 'contacts:detail' contact.id %}" class="font-medium text-indigo-600 hover:underline">
+                            {{ contact.full_name }}
+                        </a>
+                    </td>
+                    <td class="px-6 py-3 text-gray-500">{{ contact.email|default:'—' }}</td>
+                    <td class="px-6 py-3 text-gray-500">{{ contact.phone|default:contact.mobile|default:'—' }}</td>
+                    <td class="px-6 py-3">{{ contact.company|default:'—' }}</td>
+                    <td class="px-6 py-3">
+                        <span class="px-2 py-1 text-xs rounded-full 
+                            {% if contact.contact_type == 'customer' %}bg-green-100 text-green-700
+                            {% elif contact.contact_type == 'lead' %}bg-blue-100 text-blue-700
+                            {% elif contact.contact_type == 'partner' %}bg-purple-100 text-purple-700
+                            {% else %}bg-gray-100 text-gray-700{% endif %}">
+                            {{ contact.get_contact_type_display }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-3 text-gray-500">{{ contact.assigned_to.get_full_name|default:contact.assigned_to.username|default:'—' }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                        <i class="fas fa-address-book text-4xl text-gray-300 mb-3 block"></i>
+                        No contacts yet.<br>
+                        <a href="#" class="text-indigo-600 hover:underline mt-2 inline-block">Add your first contact</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

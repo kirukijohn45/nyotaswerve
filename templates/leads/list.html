@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Leads - Nyotaswerve CRM{% endblock %}
+
+{% block content %}
+<div class="mb-6 flex items-center justify-between">
+    <div>
+        <h1 class="text-2xl font-bold text-gray-800">Leads</h1>
+        <p class="text-gray-500">Track and manage your sales leads</p>
+    </div>
+    <a href="#" class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700">
+        <i class="fas fa-plus mr-1"></i>Add Lead
+    </a>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="bg-gray-50 text-left text-gray-500">
+                    <th class="px-6 py-3 font-medium">Title</th>
+                    <th class="px-6 py-3 font-medium">Contact</th>
+                    <th class="px-6 py-3 font-medium">Status</th>
+                    <th class="px-6 py-3 font-medium">Priority</th>
+                    <th class="px-6 py-3 font-medium">Value</th>
+                    <th class="px-6 py-3 font-medium">Owner</th>
+                    <th class="px-6 py-3 font-medium">Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lead in leads %}
+                <tr class="border-t border-gray-100 hover:bg-gray-50">
+                    <td class="px-6 py-3">
+                        <a href="{% url 'leads:detail' lead.id %}" class="font-medium text-indigo-600 hover:underline">
+                            {{ lead.title }}
+                        </a>
+                    </td>
+                    <td class="px-6 py-3">{{ lead.contact.full_name|default:'—' }}</td>
+                    <td class="px-6 py-3">
+                        <span class="px-2 py-1 text-xs rounded-full 
+                            {% if lead.status == 'new' %}bg-blue-100 text-blue-700
+                            {% elif lead.status == 'won' %}bg-green-100 text-green-700
+                            {% elif lead.status == 'lost' %}bg-red-100 text-red-700
+                            {% else %}bg-gray-100 text-gray-700{% endif %}">
+                            {{ lead.get_status_display }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-3">
+                        <span class="{% if lead.priority == 'urgent' %}text-red-600 font-medium{% elif lead.priority == 'high' %}text-orange-600{% elif lead.priority == 'medium' %}text-yellow-600{% else %}text-gray-500{% endif %}">
+                            {{ lead.get_priority_display }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-3 font-medium">{% if lead.estimated_value %}KES {{ lead.estimated_value|floatformat:0|intcomma }}{% else %}—{% endif %}</td>
+                    <td class="px-6 py-3 text-gray-500">{{ lead.assigned_to.get_full_name|default:lead.assigned_to.username|default:'—' }}</td>
+                    <td class="px-6 py-3 text-gray-500">{{ lead.created_at|date:"d M Y" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="px-6 py-12 text-center text-gray-500">
+                        <i class="fas fa-users text-4xl text-gray-300 mb-3 block"></i>
+                        No leads yet.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
