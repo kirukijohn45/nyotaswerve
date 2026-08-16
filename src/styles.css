@@ -197,7 +197,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .gallery__head { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 45px; align-items: end; margin-bottom: 62px; }
 .gallery__intro { color: #8f8c85; font-size: .8rem; line-height: 1.8; margin: 0 0 5px; }
 .gallery-toolbar { min-height: 75px; padding: 14px 0; margin: -20px 0 28px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 25px; }
-.gallery-toolbar > span { color: #716e68; text-transform: uppercase; letter-spacing: .15em; font-size: .55rem; white-space: nowrap; }
+.gallery-toolbar__meta { display: flex; align-items: center; gap: 18px; white-space: nowrap; }
+.gallery-toolbar__meta > span { color: #716e68; text-transform: uppercase; letter-spacing: .15em; font-size: .55rem; }
+.gallery-toolbar__meta > a { color: var(--gold); text-transform: uppercase; letter-spacing: .13em; font-size: .54rem; display: inline-flex; align-items: center; gap: 6px; }
 .filters { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-start; }
 .filters button { appearance: none; background: none; border: 1px solid rgba(255,255,255,.17); color: #8f8c85; padding: 9px 12px; font-size: .57rem; text-transform: uppercase; letter-spacing: .13em; cursor: pointer; transition: .25s; }
 .filters button:hover, .filters button.active { background: var(--gold); color: #111; border-color: var(--gold); }
@@ -461,7 +463,7 @@ footer h4 { color: #696660; font-size: .56rem; font-weight: 500; text-transform:
   .gallery__head { gap: 28px; }
   .gallery__intro { margin: 0; }
   .gallery-toolbar { display: block; margin-top: -8px; padding: 12px 0 17px; }
-  .gallery-toolbar > span { display: block; margin-top: 12px; }
+  .gallery-toolbar__meta { margin-top: 12px; justify-content: space-between; }
   .filters { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; width: 100%; padding-bottom: 4px; }
   .filters button { white-space: nowrap; }
   .gallery-grid, .gallery-grid--small, .gallery-grid--preview { grid-template-columns: 1fr 1fr; grid-auto-rows: 215px; gap: 7px; }

@@ -27,6 +27,8 @@ import './styles.css';
 
 const phoneDisplay = '+254 795 216 012';
 const whatsappHref = 'https://wa.me/254795216012?text=Hello%20Nyota%20Swerve%2C%20I%20would%20like%20to%20book%20a%20consultation.';
+const mapsHref = 'https://www.google.com/maps/place/Nyota.+Swerve.+Closet/@-1.1338746,36.9743651,17z/data=!4m6!3m5!1s0x182f4748a6a9a321:0xdc1e2f82dccb9930!8m2!3d-1.1338746!4d36.9743651!16s%2Fg%2F11njcycps5';
+const mapsPrimaryImage = 'https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmOCKoio5Hrabr22H7UGeJB9YgMe-KdJcmc-eIY3Jgk9nZa8qLEvoJAMyjYx2BcIt5mf_dFQrHD8AURuOKcebzI6c2TpnHm9JXJgBBAB596Z5R-d3kZuwHKdwK6_xqNy6fa1ugJpjUBub7D=w1200-h1600-k-no';
 
 const services = [
   {
@@ -61,6 +63,7 @@ const process = [
 ];
 
 const gallery = [
+  { src: mapsPrimaryImage, fallback: '/images/gallery-client.jpg', title: 'From the Nyota closet', category: 'Clients', source: 'Google Maps', tall: true },
   { src: '/images/nyota-wedding.jpg', title: 'The wedding party', category: 'Wedding', tall: true },
   { src: '/images/nyota-craft.jpg', title: 'Made by hand', category: 'Process' },
   { src: '/images/nyota-hero.jpg', title: 'Midnight charcoal', category: 'Business', wide: true },
@@ -75,7 +78,7 @@ const gallery = [
   { src: '/images/business-suit.jpg', title: 'The executive wardrobe', category: 'Business' },
 ];
 
-const homepageGallery = [gallery[10], gallery[6], gallery[1], gallery[8]];
+const homepageGallery = [gallery[0], gallery[11], gallery[2], gallery[9]];
 
 const journal = [
   {
@@ -358,15 +361,18 @@ function Gallery({ full = false }) {
                 <button className={filter === category ? 'active' : ''} onClick={() => setFilter(category)} key={category}>{category}</button>
               ))}
             </div>
-            <span>{String(shown.length).padStart(2, '0')} images</span>
+            <div className="gallery-toolbar__meta">
+              <span>{String(shown.length).padStart(2, '0')} images</span>
+              <a href={mapsHref} target="_blank" rel="noreferrer">Google Maps photos <ArrowUpRight size={13} /></a>
+            </div>
           </div>
         )}
         <div className={`gallery-grid ${shown.length < 3 ? 'gallery-grid--small' : ''} ${full ? 'gallery-grid--full' : 'gallery-grid--preview'}`}>
           {shown.map((item, index) => (
             <button className={`gallery-item ${full && item.tall ? 'gallery-item--tall' : ''} ${full && item.wide ? 'gallery-item--wide' : ''}`} key={item.src} onClick={() => setActive(item)} aria-label={`View ${item.title}`}>
-              <img src={item.src} alt={item.title} loading="lazy" />
+              <img src={item.src} alt={item.title} loading="lazy" referrerPolicy="no-referrer" onError={item.fallback ? e => { e.currentTarget.onerror = null; e.currentTarget.src = item.fallback; } : undefined} />
               <span className="gallery-item__number">{String(index + 1).padStart(2, '0')}</span>
-              <span className="gallery-item__caption"><small>{item.category}</small><strong>{item.title}</strong></span>
+              <span className="gallery-item__caption"><small>{item.source ? `${item.category} · ${item.source}` : item.category}</small><strong>{item.title}</strong></span>
               <span className="gallery-item__view"><ArrowUpRight /></span>
             </button>
           ))}
@@ -381,8 +387,8 @@ function Gallery({ full = false }) {
       {active && (
         <div className="lightbox" role="dialog" aria-modal="true" aria-label={active.title} onClick={() => setActive(null)}>
           <button onClick={() => setActive(null)} aria-label="Close image"><X /></button>
-          <img src={active.src} alt={active.title} onClick={e => e.stopPropagation()} />
-          <div><small>{active.category}</small><strong>{active.title}</strong></div>
+          <img src={active.src} alt={active.title} referrerPolicy="no-referrer" onError={active.fallback ? e => { e.currentTarget.onerror = null; e.currentTarget.src = active.fallback; } : undefined} onClick={e => e.stopPropagation()} />
+          <div><small>{active.source ? `${active.category} · ${active.source}` : active.category}</small><strong>{active.title}</strong></div>
         </div>
       )}
     </section>
@@ -549,13 +555,13 @@ function Contact() {
           <a href={whatsappHref} target="_blank" rel="noreferrer"><MessageCircle /><span><small>WhatsApp</small>{phoneDisplay}</span><ArrowUpRight /></a>
           <a href="tel:+254795216012"><Phone /><span><small>Call the atelier</small>{phoneDisplay}</span><ArrowUpRight /></a>
           <a href="mailto:hello@nyotaswerve.co.ke"><Mail /><span><small>Email</small>hello@nyotaswerve.co.ke</span><ArrowUpRight /></a>
-          <a href="https://maps.google.com/?q=Nyota+Swerve+Closet+Ruiru+Kenya" target="_blank" rel="noreferrer"><MapPin /><span><small>Visit</small>Ruiru, Kiambu County, Kenya</span><ArrowUpRight /></a>
+          <a href={mapsHref} target="_blank" rel="noreferrer"><MapPin /><span><small>Visit</small>VX8F+FP, Ruiru, Kenya</span><ArrowUpRight /></a>
         </div>
         <div className="opening-hours"><span>Private fittings</span><b>Available by appointment</b></div>
       </div>
       <div className="contact__map">
-        <iframe title="Nyota Swerve location in Ruiru" src="https://www.google.com/maps?q=Nyota%20Swerve%20Closet%2C%20Ruiru%2C%20Kenya&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
-        <div className="map-card"><Brand compact /><p>Ruiru, Kenya</p><a href="https://maps.google.com/?q=Nyota+Swerve+Closet+Ruiru+Kenya" target="_blank" rel="noreferrer">Get directions <ArrowUpRight /></a></div>
+        <iframe title="Nyota Swerve location in Ruiru" src="https://www.google.com/maps?q=-1.1338746%2C36.9743651&z=17&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+        <div className="map-card"><Brand compact /><p>VX8F+FP, Ruiru, Kenya</p><a href={mapsHref} target="_blank" rel="noreferrer">Get directions <ArrowUpRight /></a></div>
       </div>
     </section>
   );
