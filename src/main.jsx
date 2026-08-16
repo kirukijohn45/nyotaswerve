@@ -488,7 +488,7 @@ function Contact() {
           <a href="mailto:hello@nyotaswerve.co.ke"><Mail /><span><small>Email</small>hello@nyotaswerve.co.ke</span><ArrowUpRight /></a>
           <a href="https://maps.google.com/?q=Nyota+Swerve+Closet+Ruiru+Kenya" target="_blank" rel="noreferrer"><MapPin /><span><small>Visit</small>Ruiru, Kiambu County, Kenya</span><ArrowUpRight /></a>
         </div>
-        <div className="opening-hours"><span>Mon — Sat</span><b>8:30 am — 6:30 pm</b></div>
+        <div className="opening-hours"><span>Private fittings</span><b>Available by appointment</b></div>
       </div>
       <div className="contact__map">
         <iframe title="Nyota Swerve location in Ruiru" src="https://www.google.com/maps?q=Nyota%20Swerve%20Closet%2C%20Ruiru%2C%20Kenya&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
