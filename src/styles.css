@@ -103,7 +103,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .mobile-menu__footer { display: flex; justify-content: space-between; align-items: center; margin-top: 36px; color: #aaa; }
 
 .hero { height: max(760px, 100vh); min-height: 760px; position: relative; background: #080808; color: white; overflow: hidden; }
-.hero__image { position: absolute; inset: 0; background-image: url('/images/nyota-hero.jpg'); background-size: cover; background-position: center; animation: heroZoom 1.8s cubic-bezier(.2,.8,.2,1) both; }
+.hero__image { position: absolute; inset: 0; background-image: var(--hero-image); background-size: cover; background-position: center 32%; animation: heroZoom 1.8s cubic-bezier(.2,.8,.2,1) both; }
 @keyframes heroZoom { from { transform: scale(1.05); opacity: .65; } to { transform: scale(1); opacity: 1; } }
 .hero__shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(4,4,4,.94) 0%, rgba(5,5,5,.71) 38%, rgba(5,5,5,.05) 67%), linear-gradient(0deg, rgba(0,0,0,.65) 0%, transparent 30%); }
 .hero__content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-top: 72px; }
@@ -231,7 +231,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .lightbox strong { font-family: var(--display); font-size: 1.5rem; font-weight: 400; }
 
 .gallery-page-hero { height: min(840px, 90vh); min-height: 700px; position: relative; overflow: hidden; background: #080808; color: white; }
-.gallery-page-hero__image { position: absolute; inset: 0; background: url('/images/gallery-client.jpg') center 28% / cover no-repeat; animation: heroZoom 1.8s cubic-bezier(.2,.8,.2,1) both; }
+.gallery-page-hero__image { position: absolute; inset: 0; background-image: var(--gallery-hero-image); background-position: center 36%; background-size: cover; background-repeat: no-repeat; animation: heroZoom 1.8s cubic-bezier(.2,.8,.2,1) both; }
 .gallery-page-hero__shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(4,4,4,.94) 0%, rgba(4,4,4,.64) 43%, rgba(4,4,4,.08) 73%), linear-gradient(0deg, rgba(0,0,0,.65), transparent 42%); }
 .gallery-page-hero__content { height: 100%; position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-top: 95px; }
 .gallery-page-hero h1 { font-size: clamp(5rem, 9vw, 10rem); line-height: .84; letter-spacing: -.055em; margin: 0; animation: rise .9s .25s both; }
@@ -245,7 +245,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .gallery--full .gallery__head { margin-bottom: 55px; }
 .gallery--full .gallery-item--wide img { object-position: center 38%; }
 .gallery-cta { min-height: 670px; position: relative; background: #090909; color: white; overflow: hidden; display: flex; align-items: center; }
-.gallery-cta__image { position: absolute; inset: 0; background: url('/images/nyota-craft.jpg') center / cover no-repeat; }
+.gallery-cta__image { position: absolute; inset: 0; background-image: var(--gallery-cta-image); background-position: center; background-size: cover; background-repeat: no-repeat; }
 .gallery-cta__shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,3,3,.94), rgba(3,3,3,.62) 48%, rgba(3,3,3,.15)); }
 .gallery-cta__content { position: relative; z-index: 2; }
 .gallery-cta h2 { margin: 30px 0 25px; }

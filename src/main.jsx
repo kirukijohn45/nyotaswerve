@@ -27,29 +27,42 @@ import './styles.css';
 
 const phoneDisplay = '+254 795 216 012';
 const whatsappHref = 'https://wa.me/254795216012?text=Hello%20Nyota%20Swerve%2C%20I%20would%20like%20to%20book%20a%20consultation.';
-const mapsHref = 'https://www.google.com/maps/place/Nyota.+Swerve.+Closet/@-1.1338746,36.9743651,17z/data=!4m6!3m5!1s0x182f4748a6a9a321:0xdc1e2f82dccb9930!8m2!3d-1.1338746!4d36.9743651!16s%2Fg%2F11njcycps5';
-const mapsPrimaryImage = 'https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmOCKoio5Hrabr22H7UGeJB9YgMe-KdJcmc-eIY3Jgk9nZa8qLEvoJAMyjYx2BcIt5mf_dFQrHD8AURuOKcebzI6c2TpnHm9JXJgBBAB596Z5R-d3kZuwHKdwK6_xqNy6fa1ugJpjUBub7D=w1200-h1600-k-no';
+const mapsHref = 'https://www.google.com/maps/place/Nyota.+Swerve.+Closet/@-1.1338507,36.9744499,3a,75y,90t/data=!3m8!1e2!3m6!1sCIABIhB6eDCFhRYBpItwMv8U_QG_!2e10!3e12!6shttps:%2F%2Flh3.googleusercontent.com%2Fgps-cs-s%2FAHRPTWn6iXRsdloNiPFsUbv2C3FaRQp3PPwbd7KY1pSTgGdxxVlmAOPThu4AbS7ssnZl4iqK2aJjeHFkTQh52phYyQy-71AU_he3dYXWF4-89JlHpnmaCTExbK52Er3fMuIuhpeBL2zdO-IfRCA%3Dw203-h101-k-no!7i11811!8i5906!4m9!3m8!1s0x182f4748a6a9a321:0xdc1e2f82dccb9930!8m2!3d-1.1338746!4d36.9743651!10e5!14m1!1BCgIgAQ!16s%2Fg%2F11njcycps5';
+
+// Owner-uploaded photos from the Nyota Swerve Google Maps listing.
+const mapsImages = [
+  'https://lh3.googleusercontent.com/gps-cs/AH1DqX_u8oD6ehnEBP4uXbuPmAWhb7JQQTYnUG5YZtl_gup2gs700hYgvxW-iMJ1KEdZEtfO_BhckhiMZH9tVPwT0LquEi6Qne-x7zehDNPrS0_Vk0-uueDe1UvkaVXt91GsdpYYKnLXRVCiOMBe=w1200-h1600-p-k-no',
+  'https://lh3.googleusercontent.com/gps-cs/AH1DqX_EKu9-0S37jHY96PwLpwbdfHmPc1SWy2JX8iCRxMLT0nyKyvp_Id4BYZ3Qr4BEOn2DLElXbjNXQZT30M1QXh0bXvGcGPuxnkenY_A4rZ80qW8pRukNlzLcnBsACRUaHQzdjaJYCYRI1B0=w1200-h1600-p-k-no',
+  'https://lh3.googleusercontent.com/gps-cs/AH1DqX9YVcROV6ALOifK37yeqk7ni4A4vBmi5ZZKe6tvDNsgZGdZGEICsd_bItsx4ZJbi-q10KGmGDHn5IityR_2RcrdEeva6-6rtE-fbuid8am0ulqnTLTgTJJbL4IW2P_BcqUa2lsshzYyDnWF=w1200-h1600-p-k-no',
+  'https://lh3.googleusercontent.com/gps-cs/AH1DqX_vyJzHf1MWYwP6WgkEupRy8qpXT3fvIhVM4bgZ96DDrTqFWWjBPbvagI1zsniY_kJX8Q2cG2gC3WpPGp-7lxHDD1Se5YailkX6xu8ANS3jDEvWm3CoN9tyKlv_VXUguQZVxX3AfpPtgV6G=w1200-h1600-p-k-no',
+  'https://lh3.googleusercontent.com/gps-cs/AH1DqX-TgFWzto2LU15X2kgkrUym2lCDg-XJapOYInYYAFTLhjQrgMht5ZnOLACeiIMd27rnYF2Jtf1GiS3pPOjGm_pB_Ci3Ofi_XsFk-v0erryuXx9Yp76QobTYodD7DAh5om2mExx7tlpkIs5m=w1200-h1600-p-k-no',
+  'https://lh3.googleusercontent.com/gps-cs/AH1DqX9Gjcfppb92Az7jLuilOq-I6Q6kcK_5CPj8XCafmAtatMg09w4F3e2ZQzeDYVwixMQcL5ngx8eYpmJ1WTKzM7HB5ihXYCerGiDoeerZoA8S0-lKMHjIkwOAqbxtdP6lobBaLKjgfG4kfWvL=w1200-h1600-p-k-no',
+  'https://lh3.googleusercontent.com/gps-cs/AH1DqX8TlRe953-H1shifk1S0Mc4o16QMelE0VCz_pWFsWFYGmNdYDVNPGV3EbtvQeUZ_BUNXtwm1vMuh4RdBQmb3tobayCaPTvH7vgrsXWop0wiACEcmHVj0kHhFHEODLhhjhhKgDZCatScrBE=w1200-h1600-p-k-no',
+  'https://lh3.googleusercontent.com/gps-cs/AH1DqX9M7BeXgEmewFwdrCbvTGfWQimKuybpO_Ab5oAwnGg37IGy_NjSopJi_gfRoVW9-YFq7KXXVq9MGGgbEkUMHFDODYSjaTmNhDinq7Semus5OJDemLyPbQYRu39mK5KiGIgw_ynbc6S6hWo=w1200-h1600-p-k-no',
+  'https://lh3.googleusercontent.com/gps-cs/AH1DqX-KlaqkF636_qv_zYT8el4eJHOc_pVnToAZXvQK8LKX8F0E_P12uJmhb9KxcmnwYGkQVwajIdcHgJQUvIalW7K4kF3NIU5XLf_Rk_y4FHdLJucQ-eNoSfzM3gk-JUsofR8pP6VulkiWkXg3=w1200-h1600-p-k-no',
+  'https://lh3.googleusercontent.com/gps-cs/AH1DqX9Xjow5SCIHyOYGPGKH2rxk9GSR6QnlKQ64kCeDpaL1jXuwHEkW3EIci5ewgbMbru3Gj3XuzGFUFVgMkIHUqop6mKS4OpwNvD8FPoq-6wcG-YEYNlvWcG6i1mynvIyaM04TsJCA2muYb5w=w1200-h1600-p-k-no',
+];
 
 const services = [
   {
     number: '01',
     title: 'Bespoke tailoring',
     copy: 'One pattern, cut only for you. From business suits to statement tuxedos, every detail follows your frame and your story.',
-    image: '/images/nyota-hero.jpg',
+    image: mapsImages[0],
     items: ['Two & three-piece suits', 'Tuxedos & dinner jackets', 'Blazers, trousers & shirts'],
   },
   {
     number: '02',
     title: 'Wedding atelier',
     copy: 'A composed wedding wardrobe for the groom and his circle, designed to feel connected without ever looking uniform.',
-    image: '/images/nyota-wedding.jpg',
+    image: mapsImages[2],
     items: ['Groom consultation', 'Groomsmen packages', 'Finishing accessories'],
   },
   {
     number: '03',
     title: 'Corporate & care',
     copy: 'Confident tailoring for teams, plus expert alterations that restore proportion, comfort and polish to the clothes you own.',
-    image: '/images/business-suit.jpg',
+    image: mapsImages[3],
     items: ['Corporate wardrobes', 'Jacket & trouser resizing', 'Repairs and alterations'],
   },
 ];
@@ -63,22 +76,19 @@ const process = [
 ];
 
 const gallery = [
-  { src: mapsPrimaryImage, fallback: '/images/gallery-client.jpg', title: 'From the Nyota closet', category: 'Clients', source: 'Google Maps', tall: true },
-  { src: '/images/nyota-wedding.jpg', title: 'The wedding party', category: 'Wedding', tall: true },
-  { src: '/images/nyota-craft.jpg', title: 'Made by hand', category: 'Process' },
-  { src: '/images/nyota-hero.jpg', title: 'Midnight charcoal', category: 'Business', wide: true },
-  { src: '/images/client-tuxedo.jpg', title: 'Black tie, redefined', category: 'Tuxedo', tall: true },
-  { src: '/images/fitting.jpg', title: 'A precise shoulder', category: 'Process' },
-  { src: '/images/tuxedo-detail.jpg', title: 'The final adjustment', category: 'Tuxedo' },
-  { src: '/images/gallery-client.jpg', title: 'Quiet confidence', category: 'Clients', tall: true },
-  { src: '/images/gallery-accessories.jpg', title: 'The finishing notes', category: 'Accessories', tall: true },
-  { src: '/images/gallery-before-after.jpg', title: 'The power of proportion', category: 'Transformations', wide: true },
-  { src: '/images/gallery-fabric.jpg', title: 'Cloth with character', category: 'Process', tall: true },
-  { src: '/images/gallery-groom.jpg', title: 'The ivory dinner jacket', category: 'Wedding', tall: true },
-  { src: '/images/business-suit.jpg', title: 'The executive wardrobe', category: 'Business' },
+  { src: mapsImages[0], title: 'Signature pinstripe', category: 'Bespoke', source: 'Nyota Swerve', tall: true },
+  { src: mapsImages[1], title: 'Corporate confidence', category: 'Corporate', source: 'Nyota Swerve', tall: true },
+  { src: mapsImages[2], title: 'A wedding with character', category: 'Wedding', source: 'Nyota Swerve', tall: true },
+  { src: mapsImages[3], title: 'Tailored in blue', category: 'Corporate', source: 'Nyota Swerve', tall: true },
+  { src: mapsImages[4], title: 'The Nyota signature', category: 'Brand', source: 'Nyota Swerve' },
+  { src: mapsImages[5], title: 'The pinstripe edit', category: 'Fabrics', source: 'Nyota Swerve', tall: true },
+  { src: mapsImages[6], title: 'Cloth selection', category: 'Fabrics', source: 'Nyota Swerve', tall: true },
+  { src: mapsImages[7], title: 'The stripe collection', category: 'Fabrics', source: 'Nyota Swerve', tall: true },
+  { src: mapsImages[8], title: 'The maker at work', category: 'Atelier', source: 'Nyota Swerve', tall: true },
+  { src: mapsImages[9], title: 'Colour, cut, character', category: 'Bespoke', source: 'Nyota Swerve', tall: true },
 ];
 
-const homepageGallery = [gallery[0], gallery[11], gallery[2], gallery[9]];
+const homepageGallery = [gallery[0], gallery[2], gallery[3], gallery[8]];
 
 const journal = [
   {
@@ -86,21 +96,21 @@ const journal = [
     date: '6 min read',
     title: 'How should a suit really fit?',
     copy: 'The quiet details—from shoulder line to trouser break—that separate a good suit from a great one.',
-    image: '/images/fitting.jpg',
+    image: mapsImages[0],
   },
   {
     category: 'Wedding notes',
     date: '4 min read',
     title: 'A groom’s guide to black tie',
     copy: 'Peak or shawl lapel? Bow tie or necktie? Start with the codes, then make the look your own.',
-    image: '/images/client-tuxedo.jpg',
+    image: mapsImages[2],
   },
   {
     category: 'Cloth stories',
     date: '5 min read',
     title: 'Choosing fabric for Kenya’s climate',
     copy: 'A practical look at weight, weave and breathability for an elegant suit that stays comfortable.',
-    image: '/images/nyota-craft.jpg',
+    image: mapsImages[6],
   },
 ];
 
@@ -201,7 +211,7 @@ function Hero({ onBook }) {
   return (
     <main id="top">
       <section className="hero">
-        <div className="hero__image" role="img" aria-label="A gentleman in a bespoke Nyota Swerve suit" />
+        <div className="hero__image" style={{ '--hero-image': `url("${mapsImages[0]}")` }} role="img" aria-label="A Nyota Swerve client in a bespoke pinstripe suit" />
         <div className="hero__shade" />
         <div className="hero__content shell">
           <div className="eyebrow hero__eyebrow"><span /> Bespoke tailoring · Kenya</div>
@@ -249,7 +259,7 @@ function ServiceCard({ service }) {
   return (
     <article className="service-card reveal">
       <div className="service-card__image">
-        <img src={service.image} alt="" loading="lazy" />
+        <img src={service.image} alt="" loading="lazy" referrerPolicy="no-referrer" />
         <span>{service.number}</span>
       </div>
       <div className="service-card__body">
@@ -285,7 +295,7 @@ function Services() {
 function Wedding({ onBook }) {
   return (
     <section className="wedding" id="weddings">
-      <div className="wedding__image reveal"><img src="/images/nyota-wedding.jpg" alt="Groom and groomsmen in coordinated black suits" loading="lazy" /></div>
+      <div className="wedding__image reveal"><img src={mapsImages[2]} alt="Nyota Swerve wedding party in coordinated tailoring" loading="lazy" referrerPolicy="no-referrer" /></div>
       <div className="wedding__copy reveal">
         <div className="eyebrow"><span /> The wedding atelier</div>
         <h2>Your day.<br />Your people.<br /><em>Your signature.</em></h2>
@@ -332,7 +342,7 @@ function Process() {
 function Gallery({ full = false }) {
   const [filter, setFilter] = useState('All');
   const [active, setActive] = useState(null);
-  const categories = ['All', 'Wedding', 'Business', 'Tuxedo', 'Clients', 'Process', 'Accessories', 'Transformations'];
+  const categories = ['All', 'Bespoke', 'Wedding', 'Corporate', 'Fabrics', 'Atelier', 'Brand'];
   const collection = full ? gallery : homepageGallery;
   const shown = filter === 'All' ? collection : collection.filter(item => item.category === filter);
 
@@ -398,7 +408,7 @@ function Gallery({ full = false }) {
 function GalleryPageHero({ onBook }) {
   return (
     <main className="gallery-page-hero" id="top">
-      <div className="gallery-page-hero__image" />
+      <div className="gallery-page-hero__image" style={{ '--gallery-hero-image': `url("${mapsImages[2]}")` }} />
       <div className="gallery-page-hero__shade" />
       <div className="shell gallery-page-hero__content">
         <div className="eyebrow hero__eyebrow"><span /> The Nyota portfolio</div>
@@ -417,7 +427,7 @@ function GalleryPageHero({ onBook }) {
 function GalleryCta({ onBook }) {
   return (
     <section className="gallery-cta">
-      <div className="gallery-cta__image" />
+      <div className="gallery-cta__image" style={{ '--gallery-cta-image': `url("${mapsImages[8]}")` }} />
       <div className="gallery-cta__shade" />
       <div className="shell gallery-cta__content reveal">
         <div className="eyebrow eyebrow--light"><span /> Your turn</div>
@@ -508,7 +518,7 @@ function BookingForm({ compact = false, onSuccess }) {
 function Booking() {
   return (
     <section className="booking section" id="booking">
-      <div className="booking__image"><img src="/images/nyota-craft.jpg" alt="A tailor marking charcoal suit fabric by hand" loading="lazy" /><span>Made for one.<br /><em>Made to last.</em></span></div>
+      <div className="booking__image"><img src={mapsImages[8]} alt="Nyota Swerve tailor at the sewing machine" loading="lazy" referrerPolicy="no-referrer" /><span>Made for one.<br /><em>Made to last.</em></span></div>
       <div className="booking__content reveal">
         <div className="eyebrow eyebrow--light"><span /> Visit the atelier</div>
         <h2>Let’s create<br /><em>your next suit.</em></h2>
@@ -531,7 +541,7 @@ function Journal() {
         <div className="journal-grid">
           {journal.map(article => (
             <article className="journal-card reveal" key={article.title}>
-              <a className="journal-card__image" href="#journal"><img src={article.image} alt="" loading="lazy" /><span><ArrowUpRight /></span></a>
+              <a className="journal-card__image" href="#journal"><img src={article.image} alt="" loading="lazy" referrerPolicy="no-referrer" /><span><ArrowUpRight /></span></a>
               <div className="journal-card__meta"><span>{article.category}</span><i />{article.date}</div>
               <h3><a href="#journal">{article.title}</a></h3>
               <p>{article.copy}</p>
